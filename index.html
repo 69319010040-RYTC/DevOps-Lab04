@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1257d6">
+  <meta name="description" content="แจ้งปัญหาไอที ติดตามสถานะ และรับความช่วยเหลือจากทีม IT Support ได้ง่ายในที่เดียว">
+  <title>IT Care — แจ้งปัญหาไอที</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --blue: #1257d6;
+      --blue-dark: #0c3f9f;
+      --blue-light: #eaf2ff;
+      --ink: #17243b;
+      --muted: #64748b;
+      --line: #e4eaf3;
+      --white: #fff;
+      --shadow: 0 18px 55px rgba(24, 66, 130, .11);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: "Prompt", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, select, textarea { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+
+    .site-header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.92); border-bottom: 1px solid rgba(228,234,243,.85); backdrop-filter: blur(14px); }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-family: "Kanit", sans-serif; font-size: 23px; font-weight: 600; letter-spacing: -.4px; }
+    .brand-mark { width: 39px; height: 39px; display: grid; place-items: center; color: white; border-radius: 12px; background: var(--blue); box-shadow: 0 7px 16px rgba(18,87,214,.24); }
+    .brand-mark svg { width: 23px; height: 23px; }
+    .brand span:last-child { color: var(--blue); }
+    .nav-links { display: flex; align-items: center; gap: 34px; color: #53627a; font-size: 14px; }
+    .nav-links a:hover { color: var(--blue); }
+    .button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 20px; border: 0; border-radius: 11px; color: white; background: var(--blue); font-weight: 500; cursor: pointer; transition: .2s ease; }
+    .button:hover { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 9px 22px rgba(18,87,214,.2); }
+    .button svg { width: 17px; height: 17px; }
+    .button-quiet { color: var(--blue); background: white; border: 1px solid #d6e3fa; }
+    .button-quiet:hover { color: white; border-color: var(--blue-dark); }
+
+    .hero { position: relative; overflow: hidden; padding: 80px 0 88px; background: linear-gradient(115deg, #f8fbff 0%, #f1f6ff 55%, #e8f1ff 100%); }
+    .hero::before, .hero::after { position: absolute; content: ""; border-radius: 50%; pointer-events: none; }
+    .hero::before { width: 520px; height: 520px; right: -170px; top: -260px; border: 1px solid rgba(18,87,214,.10); box-shadow: 0 0 0 50px rgba(18,87,214,.025), 0 0 0 100px rgba(18,87,214,.02); }
+    .hero::after { width: 260px; height: 260px; left: -180px; bottom: -180px; background: rgba(78,141,255,.07); }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 66px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; color: var(--blue); border: 1px solid #dce8fc; border-radius: 999px; background: rgba(255,255,255,.75); font-size: 12px; font-weight: 500; }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: #28b57b; box-shadow: 0 0 0 4px rgba(40,181,123,.12); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 620px; margin: 21px 0 16px; font-family: "Kanit", sans-serif; font-size: clamp(42px, 5vw, 63px); line-height: 1.18; letter-spacing: -.8px; font-weight: 600; }
+    h1 span { color: var(--blue); }
+    .hero-copy { max-width: 510px; margin-bottom: 27px; color: var(--muted); font-size: 16px; line-height: 1.85; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-note { display: flex; align-items: center; gap: 10px; margin-top: 28px; color: #6b7890; font-size: 12px; }
+    .avatars { display: flex; padding-left: 4px; }
+    .avatar { width: 28px; height: 28px; display: grid; place-items: center; margin-left: -4px; color: var(--blue-dark); border: 2px solid #f4f8ff; border-radius: 50%; background: #dceaff; font-size: 10px; font-weight: 600; }
+    .avatar:nth-child(2) { background: #e5e3ff; color: #6253b7; }
+    .avatar:nth-child(3) { background: #d9f4ed; color: #16835d; }
+
+    .visual { position: relative; min-height: 386px; display: grid; place-items: center; }
+    .visual-orbit { position: absolute; width: 350px; height: 350px; border: 1px dashed rgba(18,87,214,.2); border-radius: 50%; }
+    .visual-orbit::before, .visual-orbit::after { position: absolute; content: ""; border-radius: 50%; background: #fff; box-shadow: 0 4px 16px rgba(36,80,150,.12); }
+    .visual-orbit::before { width: 14px; height: 14px; left: 34px; top: 68px; }
+    .visual-orbit::after { width: 10px; height: 10px; right: 25px; bottom: 86px; }
+    .support-card { position: relative; z-index: 1; width: min(370px, 100%); padding: 25px; border: 1px solid rgba(255,255,255,.9); border-radius: 22px; background: rgba(255,255,255,.93); box-shadow: 0 25px 65px rgba(36,74,130,.17); transform: rotate(-2deg); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .card-title { font-family: "Kanit", sans-serif; font-size: 17px; font-weight: 500; }
+    .status { padding: 5px 9px; color: #14835b; border-radius: 999px; background: #e5f8f0; font-size: 10px; font-weight: 500; }
+    .ticket { display: flex; gap: 13px; align-items: flex-start; padding: 14px 0; border-top: 1px solid #edf1f7; }
+    .ticket-icon { flex: 0 0 38px; width: 38px; height: 38px; display: grid; place-items: center; color: var(--blue); border-radius: 11px; background: #edf4ff; }
+    .ticket-icon svg { width: 19px; height: 19px; }
+    .ticket strong { display: block; margin: 1px 0 4px; font-size: 12px; font-weight: 500; }
+    .ticket small { color: #8793a7; font-size: 10px; }
+    .ticket-state { margin-left: auto; padding-top: 3px; color: #27966a; font-size: 10px; white-space: nowrap; }
+    .progress { height: 5px; margin-top: 11px; overflow: hidden; border-radius: 5px; background: #e9eef6; }
+    .progress span { display: block; width: 68%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #3682f6, #7aafff); }
+    .float-tag { position: absolute; z-index: 2; display: flex; align-items: center; gap: 9px; padding: 11px 14px; border: 1px solid #edf1f7; border-radius: 13px; background: white; box-shadow: 0 12px 30px rgba(37,71,120,.12); font-size: 11px; font-weight: 500; }
+    .float-tag svg { width: 18px; height: 18px; color: var(--blue); }
+    .float-tag.top { top: 36px; right: -3px; }
+    .float-tag.bottom { bottom: 30px; left: -6px; }
+
+    .stats { padding: 26px 0; border-bottom: 1px solid #edf1f6; background: white; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .stat { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 5px 15px; border-right: 1px solid var(--line); }
+    .stat:last-child { border: 0; }
+    .stat-icon { width: 38px; height: 38px; display: grid; place-items: center; color: var(--blue); border-radius: 12px; background: var(--blue-light); }
+    .stat-icon svg { width: 19px; height: 19px; }
+    .stat strong { display: block; font-family: "Kanit", sans-serif; font-size: 18px; font-weight: 500; line-height: 1.2; }
+    .stat span { color: #7b879a; font-size: 11px; }
+
+    .section { padding: 88px 0; }
+    .section-heading { max-width: 590px; margin: 0 auto 42px; text-align: center; }
+    .section-kicker { color: var(--blue); font-size: 12px; font-weight: 600; letter-spacing: .5px; }
+    h2 { margin: 9px 0 10px; font-family: "Kanit", sans-serif; font-size: clamp(29px, 3.4vw, 39px); line-height: 1.3; font-weight: 500; }
+    .section-heading p { margin-bottom: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .service-card { padding: 25px; border: 1px solid var(--line); border-radius: 17px; background: white; transition: .2s ease; }
+    .service-card:hover { border-color: #b7d0fa; box-shadow: var(--shadow); transform: translateY(-4px); }
+    .service-icon { width: 47px; height: 47px; display: grid; place-items: center; margin-bottom: 20px; color: var(--blue); border-radius: 14px; background: var(--blue-light); }
+    .service-icon svg { width: 23px; height: 23px; }
+    .service-card h3 { margin-bottom: 7px; font-family: "Kanit", sans-serif; font-size: 17px; font-weight: 500; }
+    .service-card p { margin-bottom: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+
+    .request-section { padding: 80px 0; background: #f6f9ff; }
+    .request-layout { display: grid; grid-template-columns: .8fr 1.2fr; align-items: start; gap: 60px; }
+    .request-info { padding-top: 14px; }
+    .request-info h2 { margin-top: 12px; }
+    .request-info > p { max-width: 360px; color: var(--muted); font-size: 14px; line-height: 1.9; }
+    .contact-line { display: flex; align-items: center; gap: 12px; margin-top: 22px; color: #526179; font-size: 12px; }
+    .contact-line .service-icon { width: 38px; height: 38px; margin: 0; border-radius: 11px; }
+    .contact-line strong { display: block; color: var(--ink); font-size: 12px; font-weight: 500; }
+    .request-form { padding: 28px; border: 1px solid #e8eef8; border-radius: 19px; background: white; box-shadow: 0 14px 40px rgba(30,69,125,.07); }
+    .form-heading { margin-bottom: 20px; }
+    .form-heading h3 { margin-bottom: 4px; font-family: "Kanit", sans-serif; font-size: 19px; font-weight: 500; }
+    .form-heading p { margin-bottom: 0; color: var(--muted); font-size: 11px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { color: #34425a; font-size: 11px; font-weight: 500; }
+    .field input, .field select, .field textarea { width: 100%; min-height: 43px; padding: 10px 12px; outline: none; color: var(--ink); border: 1px solid #dfe6f0; border-radius: 9px; background: #fff; font-size: 12px; transition: border .2s, box-shadow .2s; }
+    .field textarea { min-height: 88px; resize: vertical; }
+    .field input::placeholder, .field textarea::placeholder { color: #a4afbf; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: #75a5f5; box-shadow: 0 0 0 3px rgba(18,87,214,.09); }
+    .submit-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; }
+    .form-hint { color: #8a96a8; font-size: 10px; }
+    .request-form .button { min-height: 42px; font-size: 12px; }
+    .form-success { display: none; margin-top: 14px; padding: 11px 13px; color: #12764f; border: 1px solid #c9efdf; border-radius: 9px; background: #edfbf5; font-size: 12px; }
+    .form-success.show { display: block; }
+
+    .footer { padding: 25px 0; color: #78859a; background: white; font-size: 11px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-brand { color: var(--blue); font-family: "Kanit", sans-serif; font-size: 16px; font-weight: 500; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a:hover { color: var(--blue); }
+
+    @media (max-width: 800px) {
+      .nav-links { gap: 18px; }
+      .nav-links a:nth-child(2) { display: none; }
+      .hero { padding: 65px 0 70px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 15px; }
+      .hero-copy { max-width: 580px; }
+      .visual { min-height: 340px; }
+      .services { grid-template-columns: repeat(2, 1fr); }
+      .request-layout { grid-template-columns: 1fr; gap: 28px; }
+      .request-info > p { max-width: 600px; }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(100% - 32px, 440px); }
+      .nav { min-height: 66px; gap: 12px; }
+      .brand { font-size: 20px; gap: 8px; }
+      .brand-mark { width: 35px; height: 35px; }
+      .nav-links { display: none; }
+      .nav > .button { min-height: 40px; padding: 0 13px; font-size: 11px; }
+      .hero { padding: 51px 0 50px; }
+      h1 { font-size: 43px; }
+      .hero-copy { font-size: 14px; }
+      .hero-actions .button { flex: 1; padding: 0 12px; font-size: 12px; }
+      .visual { min-height: 310px; }
+      .visual-orbit { width: 280px; height: 280px; }
+      .support-card { width: min(340px, calc(100% - 18px)); padding: 20px; }
+      .float-tag.top { right: 0; top: 10px; }
+      .float-tag.bottom { left: 0; bottom: 7px; }
+      .stats { padding: 18px 0; }
+      .stats-grid { grid-template-columns: 1fr; gap: 11px; }
+      .stat { justify-content: flex-start; padding: 3px 13px; border: 0; }
+      .stat-icon { width: 34px; height: 34px; }
+      .section, .request-section { padding: 64px 0; }
+      .section-heading { margin-bottom: 28px; }
+      .services { grid-template-columns: 1fr; gap: 12px; }
+      .service-card { display: grid; grid-template-columns: 43px 1fr; column-gap: 13px; padding: 19px; }
+      .service-icon { width: 43px; height: 43px; grid-row: span 2; margin-bottom: 0; }
+      .service-card h3 { align-self: end; margin-bottom: 3px; }
+      .service-card p { align-self: start; }
+      .request-form { padding: 20px; }
+      .form-grid { grid-template-columns: 1fr; gap: 12px; }
+      .field.full { grid-column: auto; }
+      .submit-row { align-items: flex-start; flex-direction: column; }
+      .request-form .button { width: 100%; }
+      .footer-inner { align-items: flex-start; flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="IT Care หน้าหลัก">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 19 6v5.3c0 4.5-2.9 7.7-7 9.2-4.1-1.5-7-4.7-7-9.2V6l7-2.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span>IT <span>Care</span></span>
+      </a>
+      <nav class="nav-links" aria-label="เมนูหลัก">
+        <a href="#home">หน้าหลัก</a>
+        <a href="#services">บริการของเรา</a>
+        <a href="#request">แจ้งปัญหา</a>
+      </nav>
+      <a class="button" href="#request">แจ้งปัญหาเลย <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><span class="eyebrow-dot"></span> IT Support พร้อมช่วยเหลือคุณ</span>
+          <h1>ปัญหาไอที<br>ให้เรา <span>ดูแล</span></h1>
+          <p class="hero-copy">แจ้งปัญหาได้ง่าย ติดตามสถานะได้ทุกขั้นตอน ทีม IT Support พร้อมช่วยให้คุณกลับไปทำงานได้อย่างราบรื่น</p>
+          <div class="hero-actions">
+            <a class="button" href="#request">เริ่มแจ้งปัญหา <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="button button-quiet" href="#services">ดูบริการของเรา</a>
+          </div>
+          <div class="hero-note">
+            <div class="avatars" aria-hidden="true"><span class="avatar">IT</span><span class="avatar">IT</span><span class="avatar">IT</span></div>
+            <span>ทีมผู้เชี่ยวชาญ พร้อมดูแลทุกปัญหาของคุณ</span>
+          </div>
+        </div>
+
+        <div class="visual" aria-label="ตัวอย่างรายการติดตามการแจ้งปัญหา">
+          <div class="visual-orbit"></div>
+          <div class="float-tag top"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v9l6 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg> ตอบกลับรวดเร็ว</div>
+          <div class="support-card">
+            <div class="card-top"><span class="card-title">รายการแจ้งปัญหาล่าสุด</span><span class="status">กำลังดำเนินการ</span></div>
+            <div class="ticket">
+              <span class="ticket-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 20h8m-4-4v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+              <div><strong>คอมพิวเตอร์เปิดไม่ติด</strong><small>แจ้งเมื่อ 10 นาทีที่แล้ว</small></div><span class="ticket-state">รับเรื่องแล้ว</span>
+            </div>
+            <div class="ticket">
+              <span class="ticket-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 9a11 11 0 0 1 14 0M8 12a6.5 6.5 0 0 1 8 0m-5 4h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="18" r="1" fill="currentColor"/></svg></span>
+              <div><strong>เชื่อมต่อ Wi-Fi ไม่ได้</strong><small>แจ้งเมื่อ 1 ชั่วโมงที่แล้ว</small></div><span class="ticket-state">กำลังแก้ไข</span>
+            </div>
+            <div class="progress"><span></span></div>
+          </div>
+          <div class="float-tag bottom"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ติดตามสถานะได้ตลอด</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="จุดเด่นของบริการ">
+      <div class="container stats-grid">
+        <div class="stat"><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 7v5l3 2m5-2a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><div><strong>ช่วยเหลือรวดเร็ว</strong><span>ไม่ต้องรอนาน</span></div></div>
+        <div class="stat"><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v12H4zM8 21h8m-4-4v4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span><div><strong>แจ้งได้ทุกที่</strong><span>สะดวกผ่านระบบออนไลน์</span></div></div>
+        <div class="stat"><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 19 6v5.3c0 4.5-2.9 7.7-7 9.2-4.1-1.5-7-4.7-7-9.2V6l7-2.5Z" stroke="currentColor" stroke-width="1.7"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>ดูแลอย่างมืออาชีพ</strong><span>โดยทีม IT Support</span></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-heading"><span class="section-kicker">OUR SERVICES</span><h2>ช่วยเหลือเรื่องไหนได้บ้าง?</h2><p>ครอบคลุมทุกเรื่องไอทีที่ช่วยให้การทำงานของคุณไม่สะดุด</p></div>
+        <div class="services">
+          <article class="service-card"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 20h8m-4-4v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><h3>คอมพิวเตอร์และอุปกรณ์</h3><p>แก้ไขคอมพิวเตอร์ เครื่องพิมพ์ และอุปกรณ์สำนักงานที่ขัดข้อง</p></article>
+          <article class="service-card"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 9a11 11 0 0 1 14 0M8 12a6.5 6.5 0 0 1 8 0m-5 4h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="18" r="1" fill="currentColor"/></svg></span><h3>เครือข่ายและอินเทอร์เน็ต</h3><p>ช่วยตรวจสอบ Wi-Fi, LAN และปัญหาการเชื่อมต่อเครือข่าย</p></article>
+          <article class="service-card"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8m-8 4h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><h3>โปรแกรมและบัญชีผู้ใช้</h3><p>ติดตั้งโปรแกรม แก้ไขการใช้งาน และจัดการสิทธิ์บัญชีผู้ใช้</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="request-section" id="request">
+      <div class="container request-layout">
+        <div class="request-info">
+          <span class="section-kicker">NEED HELP?</span>
+          <h2>แจ้งปัญหา<br>ให้ทีมงานช่วยดูแล</h2>
+          <p>กรอกรายละเอียดเบื้องต้น ทีม IT Support จะรับเรื่องและติดต่อกลับเพื่อช่วยแก้ไขปัญหา</p>
+          <div class="contact-line"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span><div><strong>ต้องการความช่วยเหลือ?</strong>ติดต่อทีม IT Support ของคุณ</div></div>
+        </div>
+        <form class="request-form" id="support-form">
+          <div class="form-heading"><h3>แบบฟอร์มแจ้งปัญหา</h3><p>กรุณากรอกข้อมูลให้ครบถ้วน เพื่อให้เราช่วยเหลือได้รวดเร็วยิ่งขึ้น</p></div>
+          <div class="form-grid">
+            <div class="field"><label for="name">ชื่อผู้แจ้ง</label><input id="name" name="name" type="text" placeholder="ชื่อ-นามสกุล" required></div>
+            <div class="field"><label for="email">อีเมลหรือเบอร์ติดต่อ</label><input id="email" name="email" type="text" placeholder="สำหรับติดต่อกลับ" required></div>
+            <div class="field"><label for="category">ประเภทปัญหา</label><select id="category" name="category" required><option value="" disabled selected>เลือกประเภทปัญหา</option><option>คอมพิวเตอร์และอุปกรณ์</option><option>เครือข่ายและอินเทอร์เน็ต</option><option>โปรแกรมและบัญชีผู้ใช้</option><option>อื่น ๆ</option></select></div>
+            <div class="field"><label for="priority">ระดับความเร่งด่วน</label><select id="priority" name="priority" required><option value="" disabled selected>เลือกระดับความเร่งด่วน</option><option>ทั่วไป</option><option>เร่งด่วน</option><option>เร่งด่วนมาก</option></select></div>
+            <div class="field full"><label for="details">รายละเอียดปัญหา</label><textarea id="details" name="details" placeholder="อธิบายอาการหรือสิ่งที่พบโดยย่อ..." required></textarea></div>
+          </div>
+          <div class="submit-row"><span class="form-hint">* ข้อมูลนี้ใช้เพื่อประสานงานและแก้ไขปัญหาเท่านั้น</span><button class="button" type="submit">ส่งคำขอแจ้งปัญหา <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <div class="form-success" id="form-success" role="status">ส่งคำขอเรียบร้อยแล้ว (ตัวอย่างหน้าสาธิต — ยังไม่ได้เชื่อมต่อระบบรับแจ้งจริง)</div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner"><a href="#home" class="footer-brand">IT Care</a><span>© 2026 IT Care. All rights reserved.</span><div class="footer-links"><a href="#services">บริการ</a><a href="#request">แจ้งปัญหา</a></div></div>
+  </footer>
+  <script>
+    document.getElementById("support-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!this.reportValidity()) return;
+      document.getElementById("form-success").classList.add("show");
+      this.reset();
+    });
+  </script>
+</body>
+</html>
